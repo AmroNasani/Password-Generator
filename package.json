@@ -1,0 +1,52 @@
+{
+  "name": "password-generator",
+  "version": "1.0.0",
+  "description": "Lokaler Passwortgenerator für Windows und Chrome",
+  "author": "Amro Nasani",
+  "private": true,
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/generator.test.mjs",
+    "test:ui": "node tests/ui.mjs",
+    "build:extension": "node scripts/build-extension.mjs",
+    "build:windows": "electron-builder --win nsis --x64",
+    "build": "npm run test && npm run build:extension && npm run build:windows"
+  },
+  "devDependencies": {
+    "electron": "44.5.1",
+    "electron-builder": "26.15.3",
+    "fflate": "0.8.3",
+    "playwright": "1.58.2"
+  },
+  "build": {
+    "appId": "de.amronasani.passwordgenerator",
+    "productName": "Password Generator",
+    "directories": {
+      "output": "dist/windows"
+    },
+    "files": [
+      "desktop/**/*",
+      "ui/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "ui/icons/icon.ico",
+      "target": [
+        "nsis"
+      ],
+      "signExecutable": false,
+      "artifactName": "Password-Generator-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "ui/icons/icon.ico",
+      "uninstallerIcon": "ui/icons/icon.ico"
+    }
+  }
+}

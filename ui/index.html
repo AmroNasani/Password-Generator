@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Password Generator</title>
+  <link rel="icon" href="icons/icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Password Generator Startseite"><img src="icons/icon.png" width="36" height="36" alt=""><span>password<span class="brand-light"> / generator</span></span></a>
+      <span class="local-badge"><span class="dot"></span> 100 % lokal</span>
+    </header>
+    <section class="intro">
+      <p class="eyebrow">DEIN ZUGANG. DEINE SICHERHEIT.</p>
+      <h1>Starke Passwörter.<br><span>Einfach erstellt.</span></h1>
+      <p class="subtitle">Zufällig generiert. Nur auf deinem Gerät.</p>
+    </section>
+    <section class="workspace" aria-label="Passwortgenerator">
+      <div class="output-panel">
+        <div class="section-heading"><label for="password">DEIN NEUES PASSWORT</label><button id="visibility" class="text-button" type="button" aria-pressed="false">Verbergen</button></div>
+        <textarea id="password" rows="3" readonly spellcheck="false" autocomplete="off" aria-label="Generiertes Passwort"></textarea>
+        <div class="strength-row"><span id="strength-label">Sehr stark</span><span id="entropy">— Bit</span></div>
+        <meter id="strength" min="0" max="128" low="50" high="80" optimum="128" value="0" aria-label="Geschätzte Passwortstärke"></meter>
+        <div class="actions"><button id="generate" class="primary" type="button"><span aria-hidden="true">↻</span> Neu generieren</button><button id="copy" class="secondary" type="button">Kopieren <span aria-hidden="true">↗</span></button></div>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="settings-panel">
+        <div class="length-heading"><label for="length">Passwortlänge</label><input id="length-number" type="number" min="8" max="128" value="20" aria-label="Passwortlänge als Zahl"></div>
+        <input id="length" type="range" min="8" max="128" value="20" aria-label="Passwortlänge">
+        <div class="range-labels"><span>8 Zeichen</span><span>128 Zeichen</span></div>
+        <fieldset><legend>ZEICHEN VERWENDEN</legend>
+          <label class="option"><span>Großbuchstaben <small>A–Z</small></span><input id="upper" type="checkbox" checked><span class="toggle" aria-hidden="true"></span></label>
+          <label class="option"><span>Kleinbuchstaben <small>a–z</small></span><input id="lower" type="checkbox" checked><span class="toggle" aria-hidden="true"></span></label>
+          <label class="option"><span>Zahlen <small>0–9</small></span><input id="digits" type="checkbox" checked><span class="toggle" aria-hidden="true"></span></label>
+          <label class="option"><span>Sonderzeichen <small>!@#$</small></span><input id="symbols" type="checkbox" checked><span class="toggle" aria-hidden="true"></span></label>
+        </fieldset>
+        <label class="exclude"><input id="excludeSimilar" type="checkbox"><span>Ähnliche Zeichen ausschließen<small>Zum Beispiel I, l, 1, O und 0</small></span></label>
+      </div>
+    </section>
+    <footer><span class="footer-icon" aria-hidden="true">◇</span><p><strong>Privat bleibt privat.</strong> Keine Cloud. Kein Verlauf. Gespeichert werden nur deine Einstellungen.</p></footer>
+    <p class="footnote">Für jeden Zugang ein eigenes Passwort verwenden und sicher im Passwortmanager aufbewahren.</p>
+  </main>
+</body>
+</html>

@@ -7,6 +7,11 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
 dependencies {
     // JUnit 5 API und Engine für Tests
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'

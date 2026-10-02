@@ -1,28 +1,30 @@
-import java.util.ArrayList;
-import java.util.Random;
-public class Main {
-    static int MIN = 33; //first printable char in ASCII
-    static int MAX = 126; //last printable char in ASCII
-    static Random random = new Random();
+import java.security.SecureRandom;
 
-    private static ArrayList<Integer> create(int eingabe) {
-        int asciiDigit;
-        ArrayList<Integer> array = new ArrayList<>();
-        for (int i = 0; i < eingabe; i++) {
-            asciiDigit = random.nextInt((MAX - MIN + 1)) + MIN;
-            array.add(asciiDigit);
+public class Main {
+    private static final SecureRandom RANDOM = new SecureRandom();
+
+    static String create(int length) {
+        if (length < 8 || length > 128) {
+            throw new IllegalArgumentException("Die Länge muss zwischen 8 und 128 liegen.");
         }
-        return array;
+        StringBuilder password = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            password.append((char) (RANDOM.nextInt(94) + 33));
+        }
+        return password.toString();
     }
-    // for future : add multiple password to the output
 
     public static void main(String[] args) {
-        if (args.length == 0)
-            System.out.println("enter the long of key");
-        int eingabe = Integer.parseInt(args[0]);
-        ArrayList<Integer> array = create(eingabe);
-        for (int a : array)
-            System.out.print((char) a);
-
+        if (args.length != 1) {
+            System.err.println("Aufruf: Main <Länge zwischen 8 und 128>");
+            System.exit(1);
+            return;
+        }
+        try {
+            System.out.println(create(Integer.parseInt(args[0])));
+        } catch (IllegalArgumentException exception) {
+            System.err.println("Bitte eine ganze Zahl zwischen 8 und 128 angeben.");
+            System.exit(1);
+        }
     }
 }

@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Password Generator – lokal & sicher",
+  "version": "1.0.0",
+  "description": "Starke Passwörter direkt in Chrome erstellen. Lokal, ohne Konto und ohne Verlauf.",
+  "permissions": [
+    "clipboardWrite"
+  ],
+  "action": {
+    "default_title": "Passwort erstellen",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsKILC4prtoXjVKORtQK6SxVdRYwQoW8BTZeM38kIpsxJfvQePN5A91RaDcQ8Fte4VlPVY32gr9zRS6bJipeK3GTR9PovRCSGn80b9nk+yusPROKj9tozVb5pfPw8os9/AvLejkyPI86vavQjfu3q5u15oKF5lTXT6sMehpr30aG54oyBudXzJmdGpYxhcjniWkdEYaJtvZtduj++ksVdwZGW+lv1Bbs1tEIuJxKWh9OFKgLpmw7kaoCIEUW2I3eONnJNrstm9+Om4+m5hHESpuJPdnQtiS+u180jXCY2xay0BxuK9jmalskcz8yfzKSZxhvsCsdE4KJgRbMKQsG1/QIDAQAB"
+}
