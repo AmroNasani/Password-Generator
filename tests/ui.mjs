@@ -17,11 +17,16 @@ async function exercise(page, label, copyCheck) {
   for (const key of ['upper', 'lower', 'digits', 'symbols']) await page.locator(`#${key}`).setChecked(true);
   const password = await page.locator('#password').inputValue();
   assert.equal(password.length, 20);
+  const shortHeight = (await page.locator('#password').boundingBox()).height;
+  assert.equal(await page.locator('#visibility').textContent(), '');
+  assert.equal(await page.locator('#visibility .eye-open').isVisible(), true);
   await page.locator('#copy').click();
   await page.getByRole('status').filter({ hasText: 'Kopiert.' }).waitFor();
   if (copyCheck) await copyCheck(password);
   await page.locator('#visibility').click();
   assert.match(await page.locator('#password').inputValue(), /^•+$/);
+  assert.equal(await page.locator('#visibility .eye-closed').isVisible(), true);
+  assert.equal(await page.locator('#visibility').getAttribute('aria-label'), 'Passwort anzeigen');
   await page.locator('#visibility').click();
   assert.equal(await page.locator('#password').inputValue(), password);
   for (const key of ['upper', 'lower', 'symbols']) await page.locator(`#${key}`).uncheck();
@@ -34,6 +39,11 @@ async function exercise(page, label, copyCheck) {
   assert.equal(await page.locator('#copy').isDisabled(), true);
   await page.locator('#length-number').fill('128');
   assert.equal((await page.locator('#password').inputValue()).length, 128);
+  assert.ok((await page.locator('#password').boundingBox()).height > shortHeight);
+  await page.locator('#length-number').fill('8');
+  assert.ok((await page.locator('#password').boundingBox()).height <= shortHeight);
+  assert.equal(await page.locator('#password').evaluate(field => getComputedStyle(field).resize), 'vertical');
+  await page.locator('#length-number').fill('128');
   await page.locator('#excludeSimilar').check();
   assert.doesNotMatch(await page.locator('#password').inputValue(), /[01]/);
   await page.reload();

@@ -6,8 +6,8 @@ const uiURL = pathToFileURL(uiPath).href;
 
 function createWindow() {
   const window = new BrowserWindow({
-    width: 1040, height: 840, minWidth: 440, minHeight: 720,
-    backgroundColor: '#101512', title: 'Password Generator',
+    width: 720, height: 740, minWidth: 380, minHeight: 700,
+    backgroundColor: '#f2f3f8', title: 'Password Generator',
     icon: path.join(__dirname, '../ui/icons/icon.png'),
     autoHideMenuBar: true,
     webPreferences: { nodeIntegration: false, contextIsolation: true, sandbox: true }

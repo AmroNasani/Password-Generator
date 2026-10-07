@@ -15,9 +15,23 @@ function options() {
 }
 function displayPassword() {
   $('password').value = hidden ? '•'.repeat(currentPassword.length) : currentPassword;
-  $('visibility').textContent = hidden ? 'Anzeigen' : 'Verbergen';
+  const visibilityLabel = hidden ? 'Passwort anzeigen' : 'Passwort verbergen';
+  $('visibility').setAttribute('aria-label', visibilityLabel);
+  $('visibility').title = visibilityLabel;
   $('visibility').setAttribute('aria-pressed', String(hidden));
+  resizePassword();
 }
+function resizePassword() {
+  const field = $('password');
+  field.style.height = '0px';
+  field.style.height = `${field.scrollHeight}px`;
+}
+let outputWidth = 0;
+new ResizeObserver(([entry]) => {
+  if (entry.contentRect.width === outputWidth) return;
+  outputWidth = entry.contentRect.width;
+  resizePassword();
+}).observe(document.querySelector('.output-panel'));
 function generate() {
   revision++;
   try {
@@ -27,13 +41,17 @@ function generate() {
     $('strength').value = Math.min(128, entropy);
     $('entropy').textContent = `≈ ${entropy} Bit`;
     $('strength-label').textContent = entropy >= 100 ? 'Sehr stark' : entropy >= 80 ? 'Stark' : entropy >= 50 ? 'Mittel' : 'Schwach';
+    $('strength').title = `${$('strength-label').textContent} · ≈ ${entropy} Bit`;
+    $('strength').setAttribute('aria-valuetext', $('strength').title);
     $('copy').disabled = false;
-    status('Neu erstellt. Bereit zum Kopieren.');
+    status('');
     try { localStorage.setItem(settingsKey, JSON.stringify(selected)); } catch { /* Settings storage is optional. */ }
   } catch (error) {
     currentPassword = '';
     $('copy').disabled = true;
     $('strength').value = 0;
+    $('strength').title = 'Auswahl prüfen';
+    $('strength').setAttribute('aria-valuetext', 'Auswahl prüfen');
     $('strength-label').textContent = 'Auswahl prüfen';
     $('entropy').textContent = '— Bit';
     status(error.message, true);
@@ -61,7 +79,7 @@ $('copy').addEventListener('click', async () => {
   const copiedRevision = revision;
   try {
     await navigator.clipboard.writeText(currentPassword);
-    if (revision === copiedRevision) status('Kopiert. Die Zwischenablage enthält dein Passwort.');
+    if (revision === copiedRevision) status('Kopiert.');
   } catch {
     status('Kopieren fehlgeschlagen. Passwort anzeigen, markieren und mit Strg+C kopieren.', true);
   }
